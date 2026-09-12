@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 const pagesLinks = [
-  { name: 'HOME', href: '#hero' },
-  { name: 'ON TRACK', href: '#victories' },
-  { name: 'OFF TRACK', href: '#socials' },
-  { name: 'CALENDAR', href: '#calendar' },
+  { name: 'HOME', href: '/' },
+  { name: 'ON TRACK', href: '/on-track' },
+  { name: 'OFF TRACK', href: '/off-track' },
+  { name: 'CALENDAR', href: '/calendar' },
 ];
 
 const socialLinks = [
@@ -32,6 +34,8 @@ const riderTraits = [
 
 export default function Footer() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [modalType, setModalType] = useState<'privacy' | 'terms' | null>(null);
+  const pathname = usePathname();
   const footerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -40,6 +44,21 @@ export default function Footer() {
   });
 
   const imgY = useTransform(scrollYProgress, [0, 1], [15, 0]);
+
+  // Función robusta para asegurar que suba hasta arriba bajo cualquier circunstancia
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      document.body.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } else {
+      // Si viene de otra página, damos un micro-respiro para que cargue el home y suba
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }, 50);
+    }
+  };
 
   return (
     <footer ref={footerRef} className="relative w-full bg-[#0D120D] text-white font-sans overflow-hidden block">
@@ -50,7 +69,6 @@ export default function Footer() {
       {/* 2. LATIDOS NEÓN INTENSOS + MONTAÑAS ANIMADAS */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
         
-        {/* PULSOS DE CORAZÓN / CARDIOGRAMA */}
         <motion.div
           animate={{ scale: [1, 1.35, 1], opacity: [0.3, 0.75, 0.3] }}
           transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
@@ -62,7 +80,6 @@ export default function Footer() {
           className="absolute w-[700px] h-[700px] md:w-[1000px] md:h-[1000px] rounded-full border border-[#136CFC]/50 bg-radial from-[#136CFC]/15 to-transparent blur-xl"
         />
 
-        {/* LÍNEAS DE ALTIMETRÍA / MONTAÑA */}
         <svg 
           className="absolute bottom-10 left-0 w-full h-64 text-[#C3F84A]/20 opacity-60" 
           viewBox="0 0 1200 300" 
@@ -89,14 +106,12 @@ export default function Footer() {
           />
         </svg>
 
-        {/* Malla técnica */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       </div>
 
       {/* 3. CONTENEDOR PRINCIPAL */}
       <div className="relative w-full min-h-screen flex flex-col justify-between pt-36 pb-4 px-4 md:px-12 z-10">
         
-        {/* CABECERA: TÍTULO CON LATIDO BOOM-BOOM Y CRÉDITO DE LA VUELTA A ESPAÑA */}
         <div className="text-center relative z-20 pt-4">
           <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-none text-white select-none">
             IF THERE IS{' '}
@@ -131,7 +146,6 @@ export default function Footer() {
         {/* 4. SECCIÓN CENTRAL: FOTO Y NAVEGACIÓN */}
         <div className="relative w-full flex flex-col justify-end min-h-[500px] md:min-h-[620px] mt-auto">
           
-          {/* MARQUESINA EXPANDIDA CON CARACTERÍSTICAS */}
           <div className="absolute bottom-28 left-0 w-full z-15 overflow-hidden border-y border-white/10 py-3.5 bg-[#0D120D]/50 backdrop-blur-xs">
             <motion.div
               animate={{ x: ['0%', '-50%'] }}
@@ -153,7 +167,6 @@ export default function Footer() {
             </motion.div>
           </div>
 
-          {/* FOTO AMPLIADA PEGADA AL BORDE INFERIOR REAL */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[850px] md:max-w-[1150px] h-full flex items-end justify-center pointer-events-none z-10">
             <motion.div 
               style={{ y: imgY }}
@@ -164,32 +177,42 @@ export default function Footer() {
                 alt="Sergio Higuita"
                 className="w-full max-h-[650px] md:max-h-[850px] object-contain object-bottom filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] select-none"
               />
-
-              {/* MÁSCARA DE DEGRADADO EN LA BASE */}
               <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-[#0D120D] via-[#0D120D]/70 to-transparent pointer-events-none" />
             </motion.div>
           </div>
 
-          {/* COLUMNAS LATERALES (PAGES / CONTACT / FOLLOW ON) */}
+          {/* COLUMNAS LATERALES */}
           <div className="relative w-full grid grid-cols-1 md:grid-cols-3 items-end gap-6 z-30 pb-4">
             
-            {/* COLUMNA IZQUIERDA: PAGES */}
+            {/* COLUMNA IZQUIERDA: PAGES CON INDICADOR ACTIVO / TACHADO */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left pb-6">
               <span className="text-[11px] font-mono font-bold tracking-[0.3em] text-gray-400 uppercase mb-3 block">
                 PAGES
               </span>
               <nav className="flex flex-col gap-2">
-                {pagesLinks.map((link) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    whileHover={{ x: 10, scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                    className="text-2xl sm:text-4xl font-black tracking-tight text-white hover:text-[#C3F84A] hover:drop-shadow-[0_0_15px_rgba(195,248,74,0.8)] transition-colors duration-200 uppercase inline-block"
-                  >
-                    {link.name}
-                  </motion.a>
-                ))}
+                {pagesLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <motion.div key={link.name} whileHover={{ x: 10, scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
+                      <Link
+                        href={link.href}
+                        scroll={true}
+                        onClick={(e) => {
+                          if (link.href === '/') {
+                            handleHomeClick(e);
+                          }
+                        }}
+                        className={`text-2xl sm:text-4xl font-black tracking-tight uppercase inline-block no-underline transition-colors duration-200 ${
+                          isActive 
+                            ? 'text-[#C3F84A] line-through decoration-[#C3F84A] decoration-4 drop-shadow-[0_0_15px_rgba(195,248,74,0.8)]' 
+                            : 'text-white hover:text-[#C3F84A]'
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </nav>
             </div>
 
@@ -220,7 +243,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     whileHover={{ x: -10, scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                    className="text-2xl sm:text-4xl font-black tracking-tight text-white hover:text-[#C3F84A] hover:drop-shadow-[0_0_15px_rgba(195,248,74,0.8)] transition-colors duration-200 uppercase inline-block"
+                    className="text-2xl sm:text-4xl font-black tracking-tight text-white hover:text-[#C3F84A] hover:drop-shadow-[0_0_15px_rgba(195,248,74,0.8)] transition-colors duration-200 uppercase inline-block no-underline"
                   >
                     {social.name}
                   </motion.a>
@@ -232,19 +255,25 @@ export default function Footer() {
 
         </div>
 
-        {/* 5. COPYRIGHT EN LAS ESQUINAS INFERIORES */}
+        {/* 5. COPYRIGHT CON ENLACES A MODALES */}
         <div className="relative z-30 w-full flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-gray-400 font-bold tracking-wider uppercase pt-3 border-t border-white/5">
           <div className="hover:text-white transition-colors">
             © 2026 SERGIO HIGUITA. ALL RIGHTS RESERVED
           </div>
           <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-[#C3F84A] transition-colors">
+            <button 
+              onClick={() => setModalType('privacy')}
+              className="hover:text-[#C3F84A] transition-colors cursor-pointer bg-transparent border-none font-mono text-[11px] font-bold text-gray-400 tracking-wider uppercase"
+            >
               PRIVACY POLICY
-            </a>
+            </button>
             <span className="text-gray-600">•</span>
-            <a href="#terms" className="hover:text-[#C3F84A] transition-colors">
+            <button 
+              onClick={() => setModalType('terms')}
+              className="hover:text-[#C3F84A] transition-colors cursor-pointer bg-transparent border-none font-mono text-[11px] font-bold text-gray-400 tracking-wider uppercase"
+            >
               TERMS OF SERVICE
-            </a>
+            </button>
           </div>
         </div>
 
@@ -285,13 +314,13 @@ export default function Footer() {
                 GET IN TOUCH
               </h3>
               <p className="text-xs text-gray-300 font-sans mb-6">
-                Para patrocinios, prensa o colaboraciones oficiales con Sergio Higuita:
+                For sponsorships, press inquiries, or official collaborations with Sergio Higuita:
               </p>
 
               <div className="flex flex-col gap-3">
                 <a
                   href="mailto:sergio.a.h.g@hotmail.com"
-                  className="flex items-center justify-between bg-white/10 hover:bg-[#C3F84A] hover:text-[#0D120D] border border-white/20 px-5 py-3.5 rounded-2xl transition-all duration-300 group"
+                  className="flex items-center justify-between bg-white/10 hover:bg-[#C3F84A] hover:text-[#0D120D] border border-white/20 px-5 py-3.5 rounded-2xl transition-all duration-300 group no-underline"
                 >
                   <div className="flex flex-col text-left">
                     <span className="text-[10px] font-mono font-bold text-gray-400 group-hover:text-[#0D120D]/70">EMAIL</span>
@@ -304,7 +333,7 @@ export default function Footer() {
                   href="https://wa.me/573136118724"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between bg-white/10 hover:bg-[#C3F84A] hover:text-[#0D120D] border border-white/20 px-5 py-3.5 rounded-2xl transition-all duration-300 group"
+                  className="flex items-center justify-between bg-white/10 hover:bg-[#C3F84A] hover:text-[#0D120D] border border-white/20 px-5 py-3.5 rounded-2xl transition-all duration-300 group no-underline"
                 >
                   <div className="flex flex-col text-left">
                     <span className="text-[10px] font-mono font-bold text-gray-400 group-hover:text-[#0D120D]/70">WHATSAPP</span>
@@ -312,6 +341,76 @@ export default function Footer() {
                   </div>
                   <span className="text-sm font-bold">💬 ↗</span>
                 </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* POPUP DINÁMICO PARA PRIVACY POLICY Y TERMS OF SERVICE */}
+      <AnimatePresence>
+        {modalType && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setModalType(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#152641] border border-[#C3F84A]/40 text-white rounded-3xl p-6 sm:p-10 max-w-lg w-full shadow-[0_0_50px_rgba(195,248,74,0.3)] text-left relative"
+            >
+              <button
+                onClick={() => setModalType(null)}
+                className="absolute top-5 right-5 text-gray-400 hover:text-white text-xl font-mono cursor-pointer"
+              >
+                ✕
+              </button>
+
+              <div className="inline-flex items-center gap-2 bg-[#C3F84A]/10 border border-[#C3F84A]/30 px-4 py-1.5 rounded-full mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A]" />
+                <span className="text-[10px] font-mono font-bold text-[#C3F84A] tracking-widest uppercase">
+                  {modalType === 'privacy' ? 'LEGAL // PRIVACY POLICY' : 'LEGAL // TERMS OF SERVICE'}
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-4">
+                {modalType === 'privacy' ? 'Privacy Commitment' : 'Terms & Conditions'}
+              </h3>
+
+              <div className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                {modalType === 'privacy' ? (
+                  <>
+                    <p>
+                      This digital space is built under the highest standards of transparency and professionalism. Committed to the excellence that defines Sergio Higuita&apos;s career, we guarantee the absolute protection of any contact data or interaction provided by fans, media outlets, and brand partners.
+                    </p>
+                    <p>
+                      Information gathered through direct channels or inquiries is used exclusively to manage sponsorships, press requests, and strategic collaborations, strictly adhering to digital confidentiality protocols and privacy respect.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      All visual, audiovisual, and informational content hosted on this official portfolio reflects the identity, hard work, and athletic achievements of Sergio Higuita. All rights regarding trademarks, race photography, and design assets are reserved.
+                    </p>
+                    <p>
+                      Total or partial reproduction for commercial purposes without explicit authorization from his management team is strictly prohibited. This portal remains active as a professional showcase and official hub for the global cycling community.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  onClick={() => setModalType(null)}
+                  className="bg-[#C3F84A] text-[#0D120D] font-mono font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-white transition-all cursor-pointer"
+                >
+                  CLOSE WINDOW
+                </button>
               </div>
             </motion.div>
           </motion.div>
