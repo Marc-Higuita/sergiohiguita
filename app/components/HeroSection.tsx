@@ -11,8 +11,19 @@ export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
   const [isHovered, setIsHovered] = useState(false);
   const [maskUrl, setMaskUrl] = useState<string>('');
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detectar si es dispositivo móvil para deshabilitar efectos de cursor
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    if (window.innerWidth < 768) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -73,6 +84,7 @@ export default function HeroSection() {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', checkScreenSize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -83,8 +95,8 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => !isMobile && setIsHovered(false)}
       className="relative w-full h-screen bg-[#E8F4FC] overflow-hidden select-none font-sans flex flex-col justify-between"
     >
       <canvas ref={canvasRef} className="hidden" />
@@ -97,7 +109,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.8 }}
-        className="fixed bottom-8 left-10 z-40 flex items-center gap-6 mix-blend-difference text-white pointer-events-none"
+        className="fixed bottom-8 left-6 md:left-10 z-40 flex items-center gap-6 mix-blend-difference text-white pointer-events-none"
       >
         <div className="flex items-center gap-3">
           <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center p-1">
@@ -119,8 +131,8 @@ export default function HeroSection() {
 
       {/* FONDOS AMBIENTALES */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[15%] left-[10%] w-[500px] h-[500px] bg-[#136CFC]/15 rounded-full blur-3xl" />
-        <div className="absolute bottom-[20%] right-[12%] w-[600px] h-[600px] bg-[#C3F84A]/10 rounded-full blur-3xl" />
+        <div className="absolute top-[15%] left-[10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#136CFC]/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-[20%] right-[12%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-[#C3F84A]/10 rounded-full blur-3xl" />
 
         <svg viewBox="0 0 1400 900" className="w-full h-full stroke-[#136CFC] fill-none stroke-[1.2] opacity-20" preserveAspectRatio="none">
           <path d="M -100 200 C 300 50, 700 350, 1500 150" />
@@ -136,7 +148,7 @@ export default function HeroSection() {
           <motion.div 
             animate={{ x: ["0%", "-50%"] }}
             transition={{ repeat: Infinity, duration: 28, ease: "linear" }}
-            className="flex whitespace-nowrap text-[11rem] md:text-[15rem] font-black uppercase tracking-tighter text-[#152641]"
+            className="flex whitespace-nowrap text-[8rem] sm:text-[11rem] md:text-[15rem] font-black uppercase tracking-tighter text-[#152641]"
           >
             <span>{textRowOne}</span>
             <span>{textRowOne}</span>
@@ -147,7 +159,7 @@ export default function HeroSection() {
           <motion.div 
             animate={{ x: ["-50%", "0%"] }}
             transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
-            className="flex whitespace-nowrap text-[11rem] md:text-[15rem] font-black uppercase tracking-tighter text-[#136CFC] italic"
+            className="flex whitespace-nowrap text-[8rem] sm:text-[11rem] md:text-[15rem] font-black uppercase tracking-tighter text-[#136CFC] italic"
           >
             <span>{textRowTwo}</span>
             <span>{textRowTwo}</span>
@@ -167,29 +179,31 @@ export default function HeroSection() {
           <img 
             src="/img/section1/sergiouno.png" 
             alt="Sergio Higuita Civil" 
-            className="absolute bottom-0 w-auto h-[98%] max-w-none object-contain object-bottom pointer-events-none filter drop-shadow-xl z-10"
+            className="absolute bottom-0 w-auto h-[90%] md:h-[98%] max-w-none object-contain object-bottom pointer-events-none filter drop-shadow-xl z-10"
           />
 
-          <div 
-            className="absolute inset-0 z-20 w-full h-full flex items-end justify-center pointer-events-none transition-opacity duration-300"
-            style={{
-              opacity: isHovered ? 1 : 0,
-              maskImage: `url(${maskUrl})`,
-              WebkitMaskImage: `url(${maskUrl})`,
-              maskSize: 'cover',
-              WebkitMaskSize: 'cover',
-            }}
-          >
-            <img 
-              src="/img/section1/sergiodos.png" 
-              alt="Sergio Higuita Ciclista" 
-              className="absolute bottom-0 w-auto h-[98%] max-w-none object-contain object-bottom filter drop-shadow-2xl"
-            />
-          </div>
-
-          {isHovered && (
+          {!isMobile && (
             <div 
-              className="absolute w-[300px] h-[300px] rounded-full border-2 border-[#C3F84A] shadow-[0_0_35px_rgba(195,248,74,0.6)] pointer-events-none -translate-x-1/2 -translate-y-1/2 z-30 transition-transform duration-75 ease-out"
+              className="absolute inset-0 z-20 w-full h-full flex items-end justify-center pointer-events-none transition-opacity duration-300"
+              style={{
+                opacity: isHovered ? 1 : 0,
+                maskImage: `url(${maskUrl})`,
+                WebkitMaskImage: `url(${maskUrl})`,
+                maskSize: 'cover',
+                WebkitMaskSize: 'cover',
+              }}
+            >
+              <img 
+                src="/img/section1/sergiodos.png" 
+                alt="Sergio Higuita Ciclista" 
+                className="absolute bottom-0 w-auto h-[98%] max-w-none object-contain object-bottom filter drop-shadow-2xl"
+              />
+            </div>
+          )}
+
+          {!isMobile && isHovered && (
+            <div 
+              className="absolute w-[300px] h-[300px] rounded-full border-2 border-[#C3F84A] shadow-[0_0_35px_rgba(195,248,74,0.6)] pointer-events-none -translate-x-1/2 -translate-y-1/2 z-30 transition-transform duration-75 ease-out hidden md:block"
               style={{
                 left: `${mousePos.x}px`,
                 top: `${mousePos.y}px`,

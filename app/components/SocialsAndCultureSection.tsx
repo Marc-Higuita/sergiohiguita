@@ -49,27 +49,27 @@ const friendsPhotosPool = [
 ];
 
 const bubblePositions = [
-  { top: '3%', left: '2%', size: 'w-44 h-44 md:w-64 md:h-64' },
-  { top: '4%', right: '3%', size: 'w-52 h-52 md:w-76 md:h-76' },
-  { top: '36%', left: '0%', size: 'w-36 h-36 md:w-48 md:h-48' },
-  { top: '38%', right: '0%', size: 'w-40 h-40 md:w-56 md:h-56' },
-  { bottom: '12%', left: '3%', size: 'w-48 h-48 md:w-68 md:h-68' },
-  { bottom: '10%', right: '3%', size: 'w-44 h-44 md:w-60 md:h-60' },
-  { top: '1%', left: '34%', size: 'w-28 h-28 md:w-36 md:h-36' },
-  { top: '1%', right: '34%', size: 'w-24 h-24 md:w-32 md:h-32' },
-  { bottom: '4%', left: '28%', size: 'w-32 h-32 md:w-44 md:h-44' },
-  { bottom: '4%', right: '28%', size: 'w-36 h-36 md:w-48 md:h-48' },
+  { top: '3%', left: '2%', size: 'w-28 h-28 sm:w-44 sm:h-44 md:w-64 md:h-64' },
+  { top: '4%', right: '3%', size: 'w-32 h-32 sm:w-52 sm:h-52 md:w-76 md:h-76' },
+  { top: '36%', left: '0%', size: 'w-24 h-24 sm:w-36 sm:h-36 md:w-48 md:h-48' },
+  { top: '38%', right: '0%', size: 'w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56' },
+  { bottom: '12%', left: '3%', size: 'w-32 h-32 sm:w-48 sm:h-48 md:w-68 md:h-68' },
+  { bottom: '10%', right: '3%', size: 'w-28 h-28 sm:w-44 sm:h-44 md:w-60 md:h-60' },
+  { top: '1%', left: '34%', size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36' },
+  { top: '1%', right: '34%', size: 'w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32' },
+  { bottom: '4%', left: '28%', size: 'w-20 h-20 sm:w-32 sm:h-32 md:w-44 md:h-44' },
+  { bottom: '4%', right: '28%', size: 'w-24 h-24 sm:w-36 sm:h-36 md:w-48 md:h-48' },
 ];
 
 const emptyGlassBubbles = [
-  { top: '16%', left: '16%', size: 'w-24 h-24 md:w-32 md:h-32' },
-  { top: '22%', right: '15%', size: 'w-28 h-28 md:w-36 md:h-36' },
-  { top: '55%', left: '12%', size: 'w-20 h-20 md:w-28 md:h-28' },
-  { top: '58%', right: '12%', size: 'w-24 h-24 md:w-32 md:h-32' },
-  { bottom: '16%', left: '42%', size: 'w-32 h-32 md:w-40 md:h-40' },
-  { top: '12%', right: '44%', size: 'w-20 h-20 md:w-24 md:h-24' },
-  { bottom: '22%', right: '36%', size: 'w-24 h-24 md:w-30 md:h-30' },
-  { top: '30%', left: '44%', size: 'w-28 h-28 md:w-36 md:h-36' },
+  { top: '16%', left: '16%', size: 'w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32' },
+  { top: '22%', right: '15%', size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36' },
+  { top: '55%', left: '12%', size: 'w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28' },
+  { top: '58%', right: '12%', size: 'w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32' },
+  { bottom: '16%', left: '42%', size: 'w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40' },
+  { top: '12%', right: '44%', size: 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24' },
+  { bottom: '22%', right: '36%', size: 'w-20 h-20 sm:w-24 sm:h-24 md:w-30 md:h-30' },
+  { top: '30%', left: '44%', size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36' },
 ];
 
 const marqueeItems = [
@@ -260,17 +260,17 @@ export default function SocialsAndCultureSection() {
             );
           })}
 
-          {/* ANIMACIÓN TIPOGRÁFICA PALABRA POR PALABRA */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-12 select-none">
+          {/* ANIMACIÓN TIPOGRÁFICA PALABRA POR PALABRA (Optimizado para móvil sin desbordes) */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-12 select-none w-full px-2">
             
             {/* LÍNEA 1 */}
-            <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 overflow-hidden">
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 overflow-hidden w-full">
               <motion.span
                 initial={{ opacity: 0, y: 90, rotate: -10, filter: 'blur(14px)' }}
                 whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.1 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
+                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
               >
                 BEHIND
               </motion.span>
@@ -280,7 +280,7 @@ export default function SocialsAndCultureSection() {
                 whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.25 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
+                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
               >
                 THE
               </motion.span>
@@ -290,20 +290,20 @@ export default function SocialsAndCultureSection() {
                 whileInView={{ opacity: 1, scale: 1, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 210, damping: 12, delay: 0.4 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
+                className="text-3xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
               >
                 VICTORIES
               </motion.span>
             </div>
 
             {/* LÍNEA 2 */}
-            <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-4 md:mt-8 overflow-hidden">
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 mt-3 sm:mt-6 md:mt-8 overflow-hidden w-full">
               <motion.span
                 initial={{ opacity: 0, y: -90, rotate: 12, filter: 'blur(14px)' }}
                 whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.55 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
+                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
               >
                 THERE
               </motion.span>
@@ -313,7 +313,7 @@ export default function SocialsAndCultureSection() {
                 whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.7 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
+                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
               >
                 IS
               </motion.span>
@@ -323,7 +323,7 @@ export default function SocialsAndCultureSection() {
                 whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 190, damping: 14, delay: 0.85 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
+                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
               >
                 A
               </motion.span>
@@ -333,7 +333,7 @@ export default function SocialsAndCultureSection() {
                 whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 210, damping: 12, delay: 1.0 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
+                className="text-3xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
               >
                 FAMILY
               </motion.span>
@@ -344,7 +344,7 @@ export default function SocialsAndCultureSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 1.25 }}
-              className="text-xs sm:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.2em] bg-white/50 border border-white/80 backdrop-blur-sm px-7 py-3 rounded-full shadow-md mt-10 inline-block"
+              className="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-white/50 border border-white/80 backdrop-blur-sm px-4 sm:px-7 py-3 rounded-full shadow-md mt-8 sm:mt-10 inline-block text-center"
             >
               MECHANICS • SOIGNEURS • CHEFS • TEAMMATES // WE CLIMB TOGETHER
             </motion.p>

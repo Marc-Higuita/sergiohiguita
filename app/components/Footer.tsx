@@ -53,7 +53,6 @@ export default function Footer() {
       document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       document.body.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     } else {
-      // Si viene de otra página, damos un micro-respiro para que cargue el home y suba
       setTimeout(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }, 50);
@@ -110,10 +109,11 @@ export default function Footer() {
       </div>
 
       {/* 3. CONTENEDOR PRINCIPAL */}
-      <div className="relative w-full min-h-screen flex flex-col justify-between pt-36 pb-4 px-4 md:px-12 z-10">
+      <div className="relative w-full min-h-0 lg:min-h-screen flex flex-col justify-between pt-36 pb-6 px-4 md:px-12 z-10">
         
-        <div className="text-center relative z-20 pt-4">
-          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-none text-white select-none">
+        {/* FRASE PRINCIPAL */}
+        <div className="text-center relative z-20 pt-6 lg:pt-2">
+          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.95] text-white select-none">
             IF THERE IS{' '}
             <motion.span 
               animate={{ scale: [1, 1.06, 1, 1.04, 1] }}
@@ -137,16 +137,17 @@ export default function Footer() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-[10px] sm:text-xs font-mono font-bold text-gray-400 tracking-[0.3em] uppercase mt-4"
+            className="text-[10px] sm:text-xs font-mono font-bold text-gray-400 tracking-[0.3em] uppercase mt-3"
           >
             — SERGIO HIGUITA // VUELTA A ESPAÑA, STAGE 18 VICTORY
           </motion.p>
         </div>
 
-        {/* 4. SECCIÓN CENTRAL: FOTO Y NAVEGACIÓN */}
-        <div className="relative w-full flex flex-col justify-end min-h-[500px] md:min-h-[620px] mt-auto">
+        {/* 4. SECCIÓN CENTRAL / CONTENEDOR COMPOSITIVO */}
+        <div className="relative w-full flex flex-col justify-end min-h-[520px] lg:min-h-[620px] mt-8 lg:mt-auto">
           
-          <div className="absolute bottom-28 left-0 w-full z-15 overflow-hidden border-y border-white/10 py-3.5 bg-[#0D120D]/50 backdrop-blur-xs">
+          {/* MARQUESINA RODADORA (Solo aparece a partir de pantallas grandes lg) */}
+          <div className="hidden lg:block absolute bottom-28 left-0 w-full z-15 overflow-hidden border-y border-white/10 py-3.5 bg-[#0D120D]/60 backdrop-blur-xs">
             <motion.div
               animate={{ x: ['0%', '-50%'] }}
               transition={{ ease: 'linear', duration: 28, repeat: Infinity }}
@@ -167,7 +168,8 @@ export default function Footer() {
             </motion.div>
           </div>
 
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[850px] md:max-w-[1150px] h-full flex items-end justify-center pointer-events-none z-10">
+          {/* FOTO DE SERGIO (Ajustada con breakpoint seguro lg para evitar el choque en el rango de 777px) */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[520px] sm:h-[600px] lg:h-full lg:max-w-[1150px] flex items-end justify-center pointer-events-none z-10 overflow-hidden">
             <motion.div 
               style={{ y: imgY }}
               className="relative w-full h-full flex items-end justify-center"
@@ -175,18 +177,18 @@ export default function Footer() {
               <img
                 src="/img/footer.png"
                 alt="Sergio Higuita"
-                className="w-full max-h-[650px] md:max-h-[850px] object-contain object-bottom filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] select-none"
+                className="w-[180%] sm:w-[140%] lg:w-full h-auto max-w-none lg:max-h-[850px] object-contain object-bottom filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] select-none opacity-95"
               />
-              <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-[#0D120D] via-[#0D120D]/70 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-full h-32 lg:h-36 bg-gradient-to-t from-[#0D120D] via-[#0D120D]/40 to-transparent pointer-events-none" />
             </motion.div>
           </div>
 
-          {/* COLUMNAS LATERALES */}
-          <div className="relative w-full grid grid-cols-1 md:grid-cols-3 items-end gap-6 z-30 pb-4">
+          {/* COLUMNAS LATERALES Y BOTÓN (Grid adaptado a lg para evitar solapamientos extraños en tablets/777px) */}
+          <div className="relative w-full grid grid-cols-1 lg:grid-cols-3 items-end gap-4 lg:gap-6 z-30 pb-2 pt-6">
             
-            {/* COLUMNA IZQUIERDA: PAGES CON INDICADOR ACTIVO / TACHADO */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left pb-6">
-              <span className="text-[11px] font-mono font-bold tracking-[0.3em] text-gray-400 uppercase mb-3 block">
+            {/* COLUMNA IZQUIERDA: PAGES */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left py-4 px-5 lg:p-0 rounded-2xl lg:rounded-none bg-[#0D120D]/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none border border-white/10 lg:border-none shadow-xl lg:shadow-none mx-0">
+              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-[#C3F84A] lg:text-gray-400 uppercase mb-2 block">
                 PAGES
               </span>
               <nav className="flex flex-col gap-2">
@@ -202,7 +204,7 @@ export default function Footer() {
                             handleHomeClick(e);
                           }
                         }}
-                        className={`text-2xl sm:text-4xl font-black tracking-tight uppercase inline-block no-underline transition-colors duration-200 ${
+                        className={`text-xl sm:text-3xl lg:text-4xl font-black tracking-tight uppercase inline-block no-underline transition-colors duration-200 ${
                           isActive 
                             ? 'text-[#C3F84A] line-through decoration-[#C3F84A] decoration-4 drop-shadow-[0_0_15px_rgba(195,248,74,0.8)]' 
                             : 'text-white hover:text-[#C3F84A]'
@@ -217,12 +219,12 @@ export default function Footer() {
             </div>
 
             {/* COLUMNA CENTRO: BOTÓN DE CONTACTO */}
-            <div className="relative w-full flex flex-col items-center justify-end pb-4">
+            <div className="relative w-full flex flex-col items-center justify-end pb-1 lg:pb-4">
               <motion.button
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsContactOpen(true)}
-                className="bg-[#C3F84A] hover:bg-white text-[#0D120D] font-mono font-black text-xs sm:text-sm tracking-widest uppercase px-8 py-4 rounded-full shadow-[0_0_35px_rgba(195,248,74,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)] transition-all duration-300 flex items-center gap-3 cursor-pointer z-40"
+                className="bg-[#C3F84A] hover:bg-white text-[#0D120D] font-mono font-black text-xs sm:text-sm tracking-widest uppercase px-8 py-3.5 rounded-full shadow-[0_0_35px_rgba(195,248,74,0.7)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer z-40 w-auto min-w-[210px]"
               >
                 <span>CONTACT SERGIO</span>
                 <span className="text-base font-bold">↗</span>
@@ -230,8 +232,8 @@ export default function Footer() {
             </div>
 
             {/* COLUMNA DERECHA: FOLLOW ON */}
-            <div className="flex flex-col items-center md:items-end text-center md:text-right pb-6">
-              <span className="text-[11px] font-mono font-bold tracking-[0.3em] text-gray-400 uppercase mb-3 block">
+            <div className="flex flex-col items-center lg:items-end text-center lg:text-right py-4 px-5 lg:p-0 rounded-2xl lg:rounded-none bg-[#0D120D]/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none border border-white/10 lg:border-none shadow-xl lg:shadow-none mx-0">
+              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-[#C3F84A] lg:text-gray-400 uppercase mb-2 block">
                 FOLLOW ON
               </span>
               <div className="flex flex-col gap-2">
@@ -243,7 +245,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     whileHover={{ x: -10, scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                    className="text-2xl sm:text-4xl font-black tracking-tight text-white hover:text-[#C3F84A] hover:drop-shadow-[0_0_15px_rgba(195,248,74,0.8)] transition-colors duration-200 uppercase inline-block no-underline"
+                    className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white hover:text-[#C3F84A] hover:drop-shadow-[0_0_15px_rgba(195,248,74,0.8)] transition-colors duration-200 uppercase inline-block no-underline"
                   >
                     {social.name}
                   </motion.a>
@@ -256,7 +258,7 @@ export default function Footer() {
         </div>
 
         {/* 5. COPYRIGHT CON ENLACES A MODALES */}
-        <div className="relative z-30 w-full flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-gray-400 font-bold tracking-wider uppercase pt-3 border-t border-white/5">
+        <div className="relative z-30 w-full flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-gray-400 font-bold tracking-wider uppercase pt-4 mt-2 border-t border-white/10 text-center sm:text-left">
           <div className="hover:text-white transition-colors">
             © 2026 SERGIO HIGUITA. ALL RIGHTS RESERVED
           </div>
