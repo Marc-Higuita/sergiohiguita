@@ -8,8 +8,14 @@ export default function MobileAlert() {
 
   useEffect(() => {
     const checkScreenSize = () => {
+      // 1. Verificamos si es pantalla menor a 1200px (celulares y tablets)
       if (window.innerWidth < 1200) {
-        setShowAlert(true);
+        // 2. Revisamos si el usuario YA le dio a continuar en esta sesión
+        const hasSeenAlert = sessionStorage.getItem('desktop_alert_dismissed');
+        
+        if (!hasSeenAlert) {
+          setShowAlert(true);
+        }
       } else {
         setShowAlert(false);
       }
@@ -21,6 +27,8 @@ export default function MobileAlert() {
   }, []);
 
   const handleDismiss = () => {
+    // 3. Guardamos en la memoria de la sesión que ya la vio/cerró para que no vuelva a salir
+    sessionStorage.setItem('desktop_alert_dismissed', 'true');
     setShowAlert(false);
   };
 
@@ -44,7 +52,7 @@ export default function MobileAlert() {
             {/* Resplandor superior sutil */}
             <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-40 h-40 bg-[#C3F84A]/10 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Iconos vectoriales  */}
+            {/* Iconos vectoriales SVG profesionales */}
             <div className="relative z-10 flex items-center gap-3.5 mb-5">
               {/* Icono Laptop */}
               <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner text-[#C3F84A]">
@@ -63,7 +71,7 @@ export default function MobileAlert() {
               </div>
             </div>
 
-            {/* Títulos y textos  */}
+            {/* Títulos y textos */}
             <div className="relative z-10 mb-7">
               <span className="inline-block text-[9px] font-mono font-bold tracking-[0.3em] text-[#C3F84A] uppercase bg-[#C3F84A]/10 border border-[#C3F84A]/20 px-3.5 py-1 rounded-full mb-3">
                 OPTIMIZED EXPERIENCE
@@ -76,7 +84,7 @@ export default function MobileAlert() {
               </p>
             </div>
 
-            {/* Botón Continue  */}
+            {/* Botón Continue */}
             <button
               onClick={handleDismiss}
               className="relative z-10 w-full py-3.5 bg-[#C3F84A] hover:bg-[#b0e23e] text-[#0B0F17] font-mono font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-[0_4px_20px_rgba(195,248,74,0.3)] active:scale-95"
