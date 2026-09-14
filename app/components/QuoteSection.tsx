@@ -82,10 +82,24 @@ export default function QuoteSection() {
     <div ref={containerRef} className="relative w-full min-h-screen lg:h-screen bg-[#E8F4FC] overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* VISTA MÓVIL / TABLET (< LG): Fondo con degradado suave para evitar corte brusco */}
+      {/* VISTA MÓVIL / TABLET (< LG): Con fondo degradado, mapa de calor y scroll down */}
       {/* ========================================================================= */}
-      <div className="flex lg:hidden flex-col items-center w-full min-h-screen bg-gradient-to-b from-[#E8F4FC] via-[#E8F4FC] to-[#152641] text-[#152641] pt-12 pb-20 px-4">
+      <div className="relative flex lg:hidden flex-col items-center w-full min-h-screen bg-gradient-to-b from-[#E8F4FC] via-[#E8F4FC] to-[#152641] text-[#152641] pt-12 pb-16 px-4 overflow-hidden">
         
+        {/* MAPA DE CALOR ANIMADO (FONDO MÓVIL) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+          <motion.div 
+            animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+            className="absolute top-[20%] left-[10%] w-[280px] h-[280px] bg-radial from-[#C3F84A]/30 via-[#136CFC]/20 to-transparent rounded-full blur-[70px]" 
+          />
+          <motion.div 
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.6, 0.4] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+            className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-radial from-[#136CFC]/40 via-[#C3F84A]/15 to-transparent rounded-full blur-[90px]" 
+          />
+        </div>
+
         {/* 1. TÍTULO ARRIBA EN MÓVIL */}
         <div className="relative z-20 flex flex-col items-center gap-1 text-center mb-6">
           <div className="inline-flex items-center gap-1.5 bg-[#152641]/10 border border-[#152641]/20 px-3 py-0.5 rounded-full">
@@ -100,7 +114,7 @@ export default function QuoteSection() {
         </div>
 
         {/* 2. FOTO ABAJO DEL TÍTULO */}
-        <div className="relative w-full max-w-sm h-[220px] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-6 bg-[#152641]">
+        <div className="relative z-10 w-full max-w-sm h-[220px] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-6 bg-[#152641]">
           <img
             src="/img/sergiobici.jpg"
             alt="Sergio Higuita Racing"
@@ -109,8 +123,8 @@ export default function QuoteSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#152641]/80 via-transparent to-transparent" />
         </div>
 
-        {/* 3. TARJETAS DE CARACTERÍSTICAS (Texto adaptado a fondo oscuro para leerse perfecto) */}
-        <div className="flex flex-col gap-3 w-full max-w-sm text-[#E8F4FC]">
+        {/* 3. TARJETAS DE CARACTERÍSTICAS */}
+        <div className="relative z-10 flex flex-col gap-3 w-full max-w-sm text-[#E8F4FC] mb-8">
           
           <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
             <div className="flex items-center justify-between mb-1">
@@ -150,11 +164,25 @@ export default function QuoteSection() {
 
         </div>
 
+        {/* 4. INDICADOR SCROLL DOWN ANIMADO EN MÓVIL */}
+        <div className="relative z-10 flex flex-col items-center gap-1.5 text-[#152641] pb-2">
+          <motion.div 
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-5 h-8 border-2 border-[#152641]/60 rounded-full flex justify-center pt-1"
+          >
+            <div className="w-1 h-2 bg-[#136CFC] rounded-full animate-bounce" />
+          </motion.div>
+          <span className="text-[10px] font-mono tracking-widest font-bold uppercase opacity-80">
+            SCROLL DOWN
+          </span>
+        </div>
+
       </div>
 
 
       {/* ========================================================================= */}
-      {/* VISTA ESCRITORIO (LG): Tu diseño intacto y perfecto */}
+      {/* VISTA ESCRITORIO (LG): Tu diseño original intacto */}
       {/* ========================================================================= */}
       <div
         ref={overlayRef}
