@@ -32,7 +32,7 @@ export default function QuoteSection() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: isMobile ? '+=30%' : '+=50%',
+          end: isMobile ? '+=100%' : '+=50%',
           scrub: 0.6,
           pin: !isMobile,
         },
@@ -79,10 +79,10 @@ export default function QuoteSection() {
   }
 
   return (
-    <div ref={containerRef} className="relative w-full min-h-screen lg:h-screen overflow-y-auto lg:overflow-hidden bg-[#E8F4FC]">
+    <div ref={containerRef} className="relative w-full min-h-screen lg:h-screen bg-[#E8F4FC] overflow-x-hidden">
       <div
         ref={overlayRef}
-        className="relative lg:absolute inset-0 w-full min-h-screen lg:h-full bg-[#152641] text-[#E8F4FC] flex flex-col items-center justify-between py-8 lg:py-12 z-30 select-none font-sans overflow-hidden"
+        className="relative lg:absolute inset-0 w-full min-h-screen lg:h-full bg-[#152641] text-[#E8F4FC] flex flex-col items-center justify-start pt-28 pb-32 lg:py-12 lg:justify-between z-30 select-none font-sans"
       >
         {/* MAPA DE CALOR ANIMADO (FONDO) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
@@ -132,13 +132,13 @@ export default function QuoteSection() {
           </div>
         </div>
 
-        {/* 1. TÍTULO ENTRADA EN LA CABECERA (Con espacio generoso tanto en móvil como en escritorio lg) */}
+        {/* 1. TÍTULO EXCLUSIVO PARA ESCRITORIO (LG) */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="relative z-20 flex flex-col items-center gap-1.5 pt-24 sm:pt-28 lg:pt-16 text-center pointer-events-none px-4"
+          className="hidden lg:flex relative z-20 flex-col items-center gap-1.5 pt-8 text-center pointer-events-none px-4 mb-4"
         >
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#C3F84A] animate-ping" />
@@ -152,12 +152,12 @@ export default function QuoteSection() {
         </motion.div>
 
         {/* 2. CONTENEDOR CENTRAL */}
-        <div className="relative z-10 w-full max-w-6xl my-auto flex items-center justify-center px-4 py-6 lg:py-4">
+        <div className="relative z-10 w-full max-w-6xl flex items-center justify-center px-4 py-4 lg:my-auto">
           
           {/* ========================================================= */}
-          {/* VISTA ESCRITORIO (LG): Con respiro extra superior */}
+          {/* VISTA ESCRITORIO (LG) */}
           {/* ========================================================= */}
-          <div className="hidden lg:flex relative w-full max-w-6xl h-[68vh] items-center justify-center p-4 mt-4">
+          <div className="hidden lg:flex relative w-full max-w-6xl h-[72vh] items-center justify-center p-4">
             
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -173,7 +173,7 @@ export default function QuoteSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#152641]/90 via-transparent to-[#152641]/30" />
             </motion.div>
 
-            {/* LÍNEAS VECTORIALES SVG ORIGINALES */}
+            {/* LÍNEAS VECTORIALES SVG */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 stroke-[#C3F84A] stroke-[2] fill-none">
               <motion.path
                 d="M 580 230 L 320 120 L 250 120"
@@ -217,9 +217,6 @@ export default function QuoteSection() {
               </div>
               <h4 className="text-base font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
               <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
-              <svg className="w-full h-6 mt-3 stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                <motion.path d="M0 20 L20 18 L35 8 L50 15 L70 4 L85 14 L100 20" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }} strokeDasharray="4 2" />
-              </svg>
             </motion.div>
 
             <motion.div
@@ -235,9 +232,6 @@ export default function QuoteSection() {
               </div>
               <h4 className="text-base font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
               <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
-              <svg className="w-full h-6 mt-3 stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                <motion.path d="M0 22 L25 14 L40 18 L60 8 L80 12 L100 22" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }} strokeDasharray="4 2" />
-              </svg>
             </motion.div>
 
             <motion.div
@@ -253,9 +247,6 @@ export default function QuoteSection() {
               </div>
               <h4 className="text-base font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
               <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
-              <svg className="w-full h-6 mt-3 stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                <motion.path d="M0 20 L30 19 L45 5 L65 16 L80 10 L100 20" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.2, ease: "linear" }} strokeDasharray="4 2" />
-              </svg>
             </motion.div>
 
             <motion.div
@@ -271,19 +262,17 @@ export default function QuoteSection() {
               </div>
               <h4 className="text-base font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
               <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
-              <svg className="w-full h-6 mt-3 stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                <motion.path d="M0 22 L20 12 L40 18 L60 6 L80 10 L100 22" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.8, ease: "linear" }} strokeDasharray="4 2" />
-              </svg>
             </motion.div>
 
           </div>
 
 
           {/* ========================================================================= */}
-          {/* VISTA MÓVIL / TABLET (< LG): Mantiene su diseño limpio y optimizado */}
+          {/* VISTA MÓVIL / TABLET (< LG) */}
           {/* ========================================================================= */}
-          <div className="flex lg:hidden flex-col items-center w-full max-w-md py-6">
+          <div className="flex lg:hidden flex-col items-center w-full max-w-md pt-4 pb-20">
             
+            {/* 1. FOTO ARRIBA */}
             <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-6">
               <img
                 src="/img/sergiobici.jpg"
@@ -293,64 +282,60 @@ export default function QuoteSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#152641]/90 via-transparent to-[#152641]/30" />
             </div>
 
-            <svg className="w-full h-10 stroke-[#C3F84A] stroke-[1.5] fill-none my-2" viewBox="0 0 100 40">
-              <motion.path 
-                d="M 50 0 L 25 35 M 50 0 L 75 35" 
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 0.6 }}
-                strokeDasharray="3 3"
-              />
+            {/* 2. TÍTULO ABAJO DE LA FOTO */}
+            <div className="relative z-20 flex flex-col items-center gap-1.5 text-center mb-6 px-2">
+              <div className="inline-flex items-center gap-2 bg-[#C3F84A]/10 border border-[#C3F84A]/30 px-3.5 py-1 rounded-full mb-1">
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
+                <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#C3F84A] uppercase">
+                  ATHLETE TELEMETRY & PROFILE
+                </span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white">
+                SERGIO'S <span className="text-[#C3F84A]">SPECIALTIES</span>
+              </h2>
+            </div>
+
+            <svg className="w-full h-8 stroke-[#C3F84A] stroke-[1.5] fill-none mb-6" viewBox="0 0 100 40">
+              <path d="M 50 0 L 25 35 M 50 0 L 75 35" strokeDasharray="3 3" />
             </svg>
 
-            <div className="flex flex-col gap-4 w-full mt-2">
+            {/* 3. TARJETAS DE CARACTERÍSTICAS ABAJO */}
+            <div className="flex flex-col gap-3.5 w-full">
               
-              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl shadow-lg">
+              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 01</span>
                   <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
                 </div>
                 <h4 className="text-sm font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
                 <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
-                <svg className="w-full h-5 mt-2 stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                  <motion.path d="M0 20 L20 18 L35 8 L50 15 L70 4 L85 14 L100 20" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }} strokeDasharray="4 2" />
-                </svg>
               </div>
 
-              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl shadow-lg">
+              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 02</span>
                   <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
                 </div>
                 <h4 className="text-sm font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
                 <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
-                <svg className="w-full h-5 mt-2 stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                  <motion.path d="M0 22 L25 14 L40 18 L60 8 L80 12 L100 22" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }} strokeDasharray="4 2" />
-                </svg>
               </div>
 
-              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl shadow-lg">
+              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 03</span>
                   <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
                 </div>
                 <h4 className="text-sm font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
                 <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
-                <svg className="w-full h-5 mt-2 stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                  <motion.path d="M0 20 L30 19 L45 5 L65 16 L80 10 L100 20" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.2, ease: "linear" }} strokeDasharray="4 2" />
-                </svg>
               </div>
 
-              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl shadow-lg">
+              <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 04</span>
                   <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-pulse" />
                 </div>
                 <h4 className="text-sm font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
                 <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
-                <svg className="w-full h-5 mt-2 stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 25">
-                  <motion.path d="M0 22 L20 12 L40 18 L60 6 L80 10 L100 22" animate={{ strokeDashoffset: [0, -40] }} transition={{ repeat: Infinity, duration: 2.8, ease: "linear" }} strokeDasharray="4 2" />
-                </svg>
               </div>
 
             </div>

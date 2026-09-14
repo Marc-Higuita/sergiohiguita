@@ -183,7 +183,7 @@ export default function SocialsAndCultureSection() {
             </div>
           </motion.div>
 
-          {/* 8 BURBUJAS DE CRISTAL VACÍAS (Z-INDEX ADAPTATIVO: MÁS ALTO EN ESCRITORIO PARA QUE FLOTEN ENCIMA) */}
+          {/* 8 BURBUJAS DE CRISTAL VACÍAS */}
           {emptyGlassBubbles.map((bub, idx) => (
             <motion.div
               key={`empty-${idx}`}
@@ -213,7 +213,7 @@ export default function SocialsAndCultureSection() {
             </motion.div>
           ))}
 
-          {/* 10 BURBUJAS FOTOGRÁFICAS (Z-INDEX ADAPTATIVO: FLOTAN ENCIMA EN ESCRITORIO) */}
+          {/* 10 BURBUJAS FOTOGRÁFICAS */}
           {bubblePositions.map((pos, idx) => {
             const currentImgIndex = (idx + photoOffset) % friendsPhotosPool.length;
             
@@ -260,94 +260,41 @@ export default function SocialsAndCultureSection() {
             );
           })}
 
-          {/* CAPA CENTRAL RESPONSIVE: FONDO Y BLUR SOLO EN MÓVIL, TRANSPARENTE EN ESCRITORIO PARA QUE LAS BURBUJAS FLOTEN SOBRE EL TEXTO */}
-          <div className="relative z-30 md:z-20 flex flex-col items-center justify-center text-center my-auto py-10 px-6 select-none w-full max-w-4xl bg-[#E8F4FC]/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none rounded-3xl md:rounded-none border border-white md:border-none shadow-[0_15px_50px_rgba(19,108,252,0.15)] md:shadow-none">
+          {/* CAPA CENTRAL RESPONSIVE: TEXTO FIJO Y LIMPIO EN MÓVIL, ANIMADO EN ESCRITORIO */}
+          <div className="relative z-30 md:z-20 flex flex-col items-center justify-center text-center my-auto py-8 px-4 select-none w-full max-w-4xl bg-[#E8F4FC]/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none rounded-3xl md:rounded-none border border-white md:border-none shadow-[0_15px_50px_rgba(19,108,252,0.15)] md:shadow-none">
             
             {/* LÍNEA 1 */}
             <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 overflow-hidden w-full">
-              <motion.span
-                initial={{ opacity: 0, y: 90, rotate: -10, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.1 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
-              >
+              <span className="text-2xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none">
                 BEHIND
-              </motion.span>
-
-              <motion.span
-                initial={{ opacity: 0, y: 90, rotate: 10, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.25 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
-              >
+              </span>
+              <span className="text-2xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none">
                 THE
-              </motion.span>
-
-              <motion.span
-                initial={{ opacity: 0, scale: 0.3, rotate: -15, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 210, damping: 12, delay: 0.4 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
-              >
+              </span>
+              <span className="text-2xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm">
                 VICTORIES
-              </motion.span>
+              </span>
             </div>
 
             {/* LÍNEA 2 */}
-            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 mt-3 sm:mt-6 md:mt-8 overflow-hidden w-full">
-              <motion.span
-                initial={{ opacity: 0, y: -90, rotate: 12, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.55 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
-              >
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 mt-2 sm:mt-6 md:mt-8 overflow-hidden w-full">
+              <span className="text-2xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none">
                 THERE
-              </motion.span>
-
-              <motion.span
-                initial={{ opacity: 0, y: 90, rotate: -8, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 170, damping: 13, delay: 0.7 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
-              >
+              </span>
+              <span className="text-2xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none">
                 IS
-              </motion.span>
-
-              <motion.span
-                initial={{ opacity: 0, scale: 1.8, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 190, damping: 14, delay: 0.85 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none"
-              >
+              </span>
+              <span className="text-2xl sm:text-6xl md:text-9xl font-black uppercase tracking-tighter text-[#0D0D0D] leading-none">
                 A
-              </motion.span>
-
-              <motion.span
-                initial={{ opacity: 0, y: 110, rotate: 16, filter: 'blur(14px)' }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 210, damping: 12, delay: 1.0 }}
-                className="text-3xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm"
-              >
+              </span>
+              <span className="text-2xl sm:text-6xl md:text-9xl font-serif italic font-light text-[#136CFC] leading-none drop-shadow-sm">
                 FAMILY
-              </motion.span>
+              </span>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.25 }}
-              className="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-white border border-white px-4 sm:px-7 py-3 rounded-full shadow-md mt-6 sm:mt-10 inline-block text-center"
-            >
+            <p className="text-[9px] sm:text-xs md:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.1em] sm:tracking-[0.2em] bg-white border border-white px-4 sm:px-7 py-2.5 sm:py-3 rounded-full shadow-md mt-5 sm:mt-10 inline-block text-center">
               MECHANICS • SOIGNEURS • CHEFS • TEAMMATES // WE CLIMB TOGETHER
-            </motion.p>
+            </p>
           </div>
 
         </div>
