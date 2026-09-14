@@ -25,16 +25,17 @@ export default function QuoteSection() {
   useEffect(() => {
     if (!isMounted || !containerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const isMobile = window.innerWidth < 1024;
+    // En dispositivos móviles (menores a 1024px) apagamos GSAP por completo para evitar que bloquee el scroll o encime elementos
+    if (window.innerWidth < 1024) return;
 
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: isMobile ? '+=100%' : '+=50%',
+          end: '+=50%',
           scrub: 0.6,
-          pin: !isMobile,
+          pin: true,
         },
       });
 
@@ -268,7 +269,7 @@ export default function QuoteSection() {
 
 
           {/* ========================================================================= */}
-          {/* VISTA MÓVIL / TABLET (< LG) */}
+          {/* VISTA MÓVIL / TABLET (< LG): Flujo natural vertical, sin GSAP, sin bloqueos */}
           {/* ========================================================================= */}
           <div className="flex lg:hidden flex-col items-center w-full max-w-md pt-4 pb-20">
             
