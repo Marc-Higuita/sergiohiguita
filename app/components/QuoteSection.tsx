@@ -82,27 +82,59 @@ export default function QuoteSection() {
     <div ref={containerRef} className="relative w-full min-h-screen lg:h-screen bg-[#E8F4FC] overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* VISTA MÓVIL / TABLET (< LG): Con fondo degradado, mapa de calor y scroll down */}
+      {/* VISTA MÓVIL / TABLET (< LG) */}
       {/* ========================================================================= */}
-      <div className="relative flex lg:hidden flex-col items-center w-full min-h-screen bg-gradient-to-b from-[#E8F4FC] via-[#E8F4FC] to-[#152641] text-[#152641] pt-12 pb-16 px-4 overflow-hidden">
+      <div className="relative flex lg:hidden flex-col items-center w-full min-h-screen bg-gradient-to-b from-[#E8F4FC] via-[#152641]/60 to-[#152641] text-[#152641] pt-12 pb-20 px-4 overflow-hidden">
         
-        {/* MAPA DE CALOR ANIMADO (FONDO MÓVIL) */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+        {/* MAPA DE CALOR Y CUADRÍCULA ANIMADA (FONDO MÓVIL) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
           <motion.div 
-            animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.5, 0.3] }}
+            animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.6, 0.3] }}
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            className="absolute top-[20%] left-[10%] w-[280px] h-[280px] bg-radial from-[#C3F84A]/30 via-[#136CFC]/20 to-transparent rounded-full blur-[70px]" 
+            className="absolute top-[10%] left-[10%] w-[320px] h-[320px] bg-radial from-[#C3F84A]/30 via-[#136CFC]/20 to-transparent rounded-full blur-[80px]" 
           />
           <motion.div 
-            animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.6, 0.4] }}
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.7, 0.4] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-radial from-[#136CFC]/40 via-[#C3F84A]/15 to-transparent rounded-full blur-[90px]" 
+            className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-radial from-[#136CFC]/40 via-[#C3F84A]/15 to-transparent rounded-full blur-[100px]" 
           />
+
+          <svg className="w-full h-full stroke-[#136CFC]/20 fill-none stroke-[1]" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="grid-mobile" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(19, 108, 252, 0.2)" strokeWidth="0.5" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#grid-mobile)" />
+          </svg>
         </div>
 
-        {/* 1. TÍTULO ARRIBA EN MÓVIL */}
-        <div className="relative z-20 flex flex-col items-center gap-1 text-center mb-6">
-          <div className="inline-flex items-center gap-1.5 bg-[#152641]/10 border border-[#152641]/20 px-3 py-0.5 rounded-full">
+        {/* MARQUEE ROTATIVO DE FONDO EN MÓVIL */}
+        <div className="absolute inset-0 flex flex-col justify-center pointer-events-none z-0 overflow-hidden leading-none opacity-10 space-y-24">
+          <div className="flex whitespace-nowrap overflow-hidden">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex whitespace-nowrap text-[7rem] font-black uppercase tracking-tighter text-[#C3F84A]"
+            >
+              <span>{textRowOne}</span>
+              <span>{textRowOne}</span>
+            </motion.div>
+          </div>
+
+          <div className="flex whitespace-nowrap overflow-hidden">
+            <motion.div
+              animate={{ x: ["-50%", "0%"] }}
+              transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+              className="flex whitespace-nowrap text-[7rem] font-black uppercase tracking-tighter text-[#136CFC] italic"
+            >
+              <span>{textRowTwo}</span>
+              <span>{textRowTwo}</span>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* TÍTULO ARRIBA EN MÓVIL */}
+        <div className="relative z-20 flex flex-col items-center gap-1 text-center mb-5">
+          <div className="inline-flex items-center gap-1.5 bg-[#152641]/10 border border-[#152641]/25 px-3 py-0.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-[#136CFC] animate-ping" />
             <span className="text-[9px] font-mono font-bold tracking-[0.2em] text-[#152641] uppercase">
               ATHLETE TELEMETRY & PROFILE
@@ -113,8 +145,8 @@ export default function QuoteSection() {
           </h2>
         </div>
 
-        {/* 2. FOTO ABAJO DEL TÍTULO */}
-        <div className="relative z-10 w-full max-w-sm h-[220px] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-6 bg-[#152641]">
+        {/* FOTO ABAJO DEL TÍTULO */}
+        <div className="relative z-10 w-full max-w-sm h-[220px] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-4 bg-[#152641]">
           <img
             src="/img/sergiobici.jpg"
             alt="Sergio Higuita Racing"
@@ -123,66 +155,109 @@ export default function QuoteSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#152641]/80 via-transparent to-transparent" />
         </div>
 
-        {/* 3. TARJETAS DE CARACTERÍSTICAS */}
-        <div className="relative z-10 flex flex-col gap-3 w-full max-w-sm text-[#E8F4FC] mb-8">
-          
-          <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 01</span>
-              <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
-            </div>
-            <h4 className="text-sm font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
-          </div>
-
-          <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 02</span>
-              <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
-            </div>
-            <h4 className="text-sm font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
-          </div>
-
-          <div className="bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 03</span>
-              <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
-            </div>
-            <h4 className="text-sm font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
-          </div>
-
-          <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 04</span>
-              <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-pulse" />
-            </div>
-            <h4 className="text-sm font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
-          </div>
-
+        {/* LÍNEA VECTORIAL SVG ANIMADA Y CENTRADA */}
+        <div className="relative z-10 w-full max-w-sm h-6 mb-3 flex justify-center">
+          <svg className="w-16 h-full stroke-[#C3F84A] stroke-[2] fill-none">
+            <motion.path
+              d="M 32 0 L 32 18 M 24 10 L 32 18 L 40 10"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 0.8 }}
+              strokeDasharray="3 3"
+            />
+          </svg>
         </div>
 
-        {/* 4. INDICADOR SCROLL DOWN ANIMADO EN MÓVIL */}
-        <div className="relative z-10 flex flex-col items-center gap-1.5 text-[#152641] pb-2">
-          <motion.div 
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-5 h-8 border-2 border-[#152641]/60 rounded-full flex justify-center pt-1"
-          >
-            <div className="w-1 h-2 bg-[#136CFC] rounded-full animate-bounce" />
-          </motion.div>
-          <span className="text-[10px] font-mono tracking-widest font-bold uppercase opacity-80">
-            SCROLL DOWN
-          </span>
+        {/* TARJETAS MÓVIL CON MONTAÑAS ANIMADAS */}
+        <div className="relative z-10 flex flex-col gap-3.5 w-full max-w-sm text-[#E8F4FC]">
+          
+          <div className="relative overflow-hidden bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L15 15 L35 28 L60 8 L85 30 L110 5 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 01</span>
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
+              </div>
+              <h4 className="text-sm font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L25 18 L45 32 L75 10 L105 25 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 02</span>
+                <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+              </div>
+              <h4 className="text-sm font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden bg-[#152641]/95 backdrop-blur-md border border-[#136CFC]/60 p-3.5 rounded-xl shadow-lg">
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L15 10 L35 25 L65 5 L90 28 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 03</span>
+                <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+              </div>
+              <h4 className="text-sm font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-3.5 rounded-xl shadow-lg">
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L20 18 L45 28 L70 12 L95 30 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 04</span>
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-pulse" />
+              </div>
+              <h4 className="text-sm font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
 
       {/* ========================================================================= */}
-      {/* VISTA ESCRITORIO (LG): Tu diseño original intacto */}
+      {/* VISTA ESCRITORIO (LG): Transición GSAP intacta + montañas animadas en cajones */}
       {/* ========================================================================= */}
       <div
         ref={overlayRef}
@@ -300,20 +375,31 @@ export default function QuoteSection() {
             />
           </svg>
 
-          {/* TARJETAS HUD DESKTOP */}
+          {/* TARJETAS HUD DESKTOP CON MONTAÑAS ANIMADAS (TRANSACCIÓN ORIGINAL INTACTA) */}
           <motion.div
             initial={{ opacity: 0, x: -60, y: -20 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="absolute top-[8%] left-[4%] z-30 bg-[#152641]/90 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(195,248,74,0.2)] group hover:scale-105 hover:border-[#C3F84A] transition-all cursor-pointer"
+            className="absolute top-[8%] left-[4%] z-30 overflow-hidden bg-[#152641]/90 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(195,248,74,0.2)] group hover:scale-105 hover:border-[#C3F84A] transition-all cursor-pointer"
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 01</span>
-              <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L15 15 L35 28 L60 8 L85 30 L110 5 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 01</span>
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-ping" />
+              </div>
+              <h4 className="text-base font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
             </div>
-            <h4 className="text-base font-black tracking-tight uppercase text-white">PUNCHY CLIMBER</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">High acceleration capacity on short steep climbs and explosive mountain finishes.</p>
           </motion.div>
 
           <motion.div
@@ -321,14 +407,25 @@ export default function QuoteSection() {
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="absolute top-[18%] right-[4%] z-30 bg-[#152641]/90 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(19,108,252,0.2)] group hover:scale-105 hover:border-[#136CFC] transition-all cursor-pointer"
+            className="absolute top-[18%] right-[4%] z-30 overflow-hidden bg-[#152641]/90 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(19,108,252,0.2)] group hover:scale-105 hover:border-[#136CFC] transition-all cursor-pointer"
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 02</span>
-              <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L25 18 L45 32 L75 10 L105 25 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 02</span>
+                <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+              </div>
+              <h4 className="text-base font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
             </div>
-            <h4 className="text-base font-black tracking-tight uppercase text-white">MEDIUM MOUNTAIN</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Specialist in undulating terrain and fast-paced mid-stage attacks.</p>
           </motion.div>
 
           <motion.div
@@ -336,14 +433,25 @@ export default function QuoteSection() {
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="absolute bottom-[18%] left-[4%] z-30 bg-[#152641]/90 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(19,108,252,0.2)] group hover:scale-105 hover:border-[#136CFC] transition-all cursor-pointer"
+            className="absolute bottom-[18%] left-[4%] z-30 overflow-hidden bg-[#152641]/90 backdrop-blur-md border border-[#136CFC]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(19,108,252,0.2)] group hover:scale-105 hover:border-[#136CFC] transition-all cursor-pointer"
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 03</span>
-              <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#136CFC] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L15 10 L35 25 L65 5 L90 28 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#136CFC] tracking-widest uppercase">FEATURE 03</span>
+                <span className="w-2 h-2 rounded-full bg-[#136CFC]" />
+              </div>
+              <h4 className="text-base font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
             </div>
-            <h4 className="text-base font-black tracking-tight uppercase text-white">EXPLOSIVE ATTACKER</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Lethal gear changes and decisive moves in closing kilometers.</p>
           </motion.div>
 
           <motion.div
@@ -351,14 +459,25 @@ export default function QuoteSection() {
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="absolute bottom-[8%] right-[4%] z-30 bg-[#152641]/90 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(195,248,74,0.2)] group hover:scale-105 hover:border-[#C3F84A] transition-all cursor-pointer"
+            className="absolute bottom-[8%] right-[4%] z-30 overflow-hidden bg-[#152641]/90 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl max-w-[240px] shadow-[0_0_25px_rgba(195,248,74,0.2)] group hover:scale-105 hover:border-[#C3F84A] transition-all cursor-pointer"
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 04</span>
-              <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-pulse" />
+            <motion.div 
+              animate={{ x: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+              className="absolute bottom-0 right-0 w-40 h-12 opacity-25 pointer-events-none"
+            >
+              <svg className="w-full h-full stroke-[#C3F84A] fill-none stroke-[1.5]" viewBox="0 0 100 40">
+                <path d="M0 40 L20 18 L45 28 L70 12 L95 30 L130 40 Z" />
+              </svg>
+            </motion.div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#C3F84A] tracking-widest uppercase">FEATURE 04</span>
+                <span className="w-2 h-2 rounded-full bg-[#C3F84A] animate-pulse" />
+              </div>
+              <h4 className="text-base font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
+              <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
             </div>
-            <h4 className="text-base font-black tracking-tight uppercase text-white">STAGE & 1-WEEK RACES</h4>
-            <p className="text-xs text-[#E8F4FC]/80 mt-1 leading-snug">Consistent overall contender in high-level WorldTour stage races.</p>
           </motion.div>
         </div>
 
