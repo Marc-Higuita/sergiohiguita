@@ -69,7 +69,7 @@ const emptyGlassBubbles = [
   { bottom: '16%', left: '42%', size: 'w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40' },
   { top: '12%', right: '44%', size: 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24' },
   { bottom: '22%', right: '36%', size: 'w-20 h-20 sm:w-24 sm:h-24 md:w-30 md:h-30' },
-  { top: '30%', left: '44%', size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36' },
+  { top: '30%', left: '44%', size: 'w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44' },
 ];
 
 const marqueeItems = [
@@ -173,9 +173,9 @@ export default function SocialsAndCultureSection() {
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-10 text-center z-40"
+            className="mb-10 text-center z-20"
           >
-            <div className="inline-flex items-center gap-3 bg-white/40 border border-white/80 backdrop-blur-sm px-6 py-2.5 rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.04)]">
+            <div className="inline-flex items-center gap-3 bg-white/60 border border-white/90 backdrop-blur-md px-6 py-2.5 rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.06)]">
               <span className="w-2.5 h-2.5 rounded-full bg-[#136CFC] animate-ping" />
               <span className="text-[10px] md:text-xs font-mono font-black text-[#152641] tracking-[0.25em] uppercase">
                 HOLD & DRAG THE MEMORY BUBBLES
@@ -183,7 +183,7 @@ export default function SocialsAndCultureSection() {
             </div>
           </motion.div>
 
-          {/* 8 BURBUJAS DE CRISTAL VACÍAS */}
+          {/* 8 BURBUJAS DE CRISTAL VACÍAS (Z-INDEX ADAPTATIVO: MÁS ALTO EN ESCRITORIO PARA QUE FLOTEN ENCIMA) */}
           {emptyGlassBubbles.map((bub, idx) => (
             <motion.div
               key={`empty-${idx}`}
@@ -206,14 +206,14 @@ export default function SocialsAndCultureSection() {
                 right: bub.right,
                 bottom: bub.bottom,
               }}
-              className={`absolute ${bub.size} rounded-full border border-white/90 bg-white/10 shadow-[0_10px_30px_rgba(255,255,255,0.3)] backdrop-blur-sm z-25 cursor-grab active:cursor-grabbing overflow-hidden`}
+              className={`absolute ${bub.size} rounded-full border border-white/90 bg-white/10 shadow-[0_10px_30px_rgba(255,255,255,0.3)] backdrop-blur-sm z-10 md:z-40 cursor-grab active:cursor-grabbing overflow-hidden`}
             >
               <div className="absolute top-2 left-3 w-1/2 h-1/2 rounded-full bg-white/50 blur-[1px]" />
               <div className="absolute bottom-2 right-3 w-1/3 h-1/3 rounded-full bg-[#C3F84A]/30 blur-[3px]" />
             </motion.div>
           ))}
 
-          {/* 10 BURBUJAS FOTOGRÁFICAS */}
+          {/* 10 BURBUJAS FOTOGRÁFICAS (Z-INDEX ADAPTATIVO: FLOTAN ENCIMA EN ESCRITORIO) */}
           {bubblePositions.map((pos, idx) => {
             const currentImgIndex = (idx + photoOffset) % friendsPhotosPool.length;
             
@@ -239,7 +239,7 @@ export default function SocialsAndCultureSection() {
                   right: pos.right,
                   bottom: pos.bottom,
                 }}
-                className={`absolute ${pos.size} rounded-full p-[2px] bg-gradient-to-tr from-white/80 via-[#C3F84A]/40 to-[#136CFC]/40 shadow-[0_15px_40px_rgba(0,0,0,0.12)] backdrop-blur-sm z-30 cursor-grab active:cursor-grabbing`}
+                className={`absolute ${pos.size} rounded-full p-[2px] bg-gradient-to-tr from-white/80 via-[#C3F84A]/40 to-[#136CFC]/40 shadow-[0_15px_40px_rgba(0,0,0,0.12)] backdrop-blur-sm z-15 md:z-40 cursor-grab active:cursor-grabbing`}
               >
                 <div className="w-full h-full rounded-full overflow-hidden relative border border-white/80 bg-white/10 backdrop-blur-sm">
                   <AnimatePresence mode="wait">
@@ -260,8 +260,8 @@ export default function SocialsAndCultureSection() {
             );
           })}
 
-          {/* ANIMACIÓN TIPOGRÁFICA PALABRA POR PALABRA (Optimizado para móvil sin desbordes) */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-12 select-none w-full px-2">
+          {/* CAPA CENTRAL RESPONSIVE: FONDO Y BLUR SOLO EN MÓVIL, TRANSPARENTE EN ESCRITORIO PARA QUE LAS BURBUJAS FLOTEN SOBRE EL TEXTO */}
+          <div className="relative z-30 md:z-20 flex flex-col items-center justify-center text-center my-auto py-10 px-6 select-none w-full max-w-4xl bg-[#E8F4FC]/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none rounded-3xl md:rounded-none border border-white md:border-none shadow-[0_15px_50px_rgba(19,108,252,0.15)] md:shadow-none">
             
             {/* LÍNEA 1 */}
             <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 md:gap-6 overflow-hidden w-full">
@@ -344,7 +344,7 @@ export default function SocialsAndCultureSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 1.25 }}
-              className="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-white/50 border border-white/80 backdrop-blur-sm px-4 sm:px-7 py-3 rounded-full shadow-md mt-8 sm:mt-10 inline-block text-center"
+              className="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-[#136CFC] uppercase tracking-[0.15em] sm:tracking-[0.2em] bg-white border border-white px-4 sm:px-7 py-3 rounded-full shadow-md mt-6 sm:mt-10 inline-block text-center"
             >
               MECHANICS • SOIGNEURS • CHEFS • TEAMMATES // WE CLIMB TOGETHER
             </motion.p>

@@ -132,13 +132,13 @@ export default function QuoteSection() {
           </div>
         </div>
 
-        {/* 1. TÍTULO ENTRADA EN LA CABECERA */}
+        {/* 1. TÍTULO ENTRADA EN LA CABECERA (Con espacio generoso tanto en móvil como en escritorio lg) */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="relative z-20 flex flex-col items-center gap-1.5 pt-4 lg:pt-8 text-center pointer-events-none px-4"
+          className="relative z-20 flex flex-col items-center gap-1.5 pt-24 sm:pt-28 lg:pt-16 text-center pointer-events-none px-4"
         >
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#C3F84A] animate-ping" />
@@ -152,12 +152,12 @@ export default function QuoteSection() {
         </motion.div>
 
         {/* 2. CONTENEDOR CENTRAL */}
-        <div className="relative z-10 w-full max-w-6xl my-auto flex items-center justify-center px-4 py-4 lg:py-0">
+        <div className="relative z-10 w-full max-w-6xl my-auto flex items-center justify-center px-4 py-6 lg:py-4">
           
           {/* ========================================================= */}
-          {/* VISTA ESCRITORIO (LG): Tu diseño original exacto al píxel */}
+          {/* VISTA ESCRITORIO (LG): Con respiro extra superior */}
           {/* ========================================================= */}
-          <div className="hidden lg:flex relative w-full max-w-6xl h-[72vh] items-center justify-center p-4">
+          <div className="hidden lg:flex relative w-full max-w-6xl h-[68vh] items-center justify-center p-4 mt-4">
             
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -280,11 +280,11 @@ export default function QuoteSection() {
 
 
           {/* ========================================================================= */}
-          {/* VISTA MÓVIL / TABLET (< LG): Foto horizontal arriba + líneas + tarjetas abajo */}
+          {/* VISTA MÓVIL / TABLET (< LG): Mantiene su diseño limpio y optimizado */}
           {/* ========================================================================= */}
-          <div className="flex lg:hidden flex-col items-center w-full max-w-md py-4">
+          <div className="flex lg:hidden flex-col items-center w-full max-w-md py-6">
             
-            <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-4">
+            <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-[#136CFC]/40 shadow-xl mb-6">
               <img
                 src="/img/sergiobici.jpg"
                 alt="Sergio Higuita Racing"
@@ -293,7 +293,7 @@ export default function QuoteSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#152641]/90 via-transparent to-[#152641]/30" />
             </div>
 
-            <svg className="w-full h-10 stroke-[#C3F84A] stroke-[1.5] fill-none my-1" viewBox="0 0 100 40">
+            <svg className="w-full h-10 stroke-[#C3F84A] stroke-[1.5] fill-none my-2" viewBox="0 0 100 40">
               <motion.path 
                 d="M 50 0 L 25 35 M 50 0 L 75 35" 
                 initial={{ pathLength: 0 }}
@@ -303,7 +303,7 @@ export default function QuoteSection() {
               />
             </svg>
 
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-4 w-full mt-2">
               
               <div className="bg-[#152641]/95 backdrop-blur-md border border-[#C3F84A]/60 p-4 rounded-xl shadow-lg">
                 <div className="flex items-center justify-between mb-1">
